@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -17,6 +16,17 @@ export default function Navbar() {
         ease: [0.25, 0.46, 0.45, 0.94] as const,
         staggerChildren: 0.1
       }
+    }
+  };
+
+  // Smooth scroll function
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
     }
   };
 
@@ -66,9 +76,14 @@ export default function Navbar() {
             className="hidden md:flex items-center space-x-8 w-full justify-center"
             variants={navVariants}
           >
-            {['Home', 'About', 'Projects', 'Contact'].map((item) => (
+            {[
+              { name: 'Home', id: 'hero' },
+              { name: 'About', id: 'about' },
+              { name: 'Projects', id: 'projects' },
+              { name: 'Contact', id: 'contact' }
+            ].map((item) => (
               <motion.div
-                key={item}
+                key={item.name}
                 variants={itemVariants}
                 whileHover={{ 
                   scale: 1.1,
@@ -84,16 +99,16 @@ export default function Navbar() {
                 }}
                 style={{ transformStyle: 'preserve-3d' }}
               >
-                <Link 
-                  href={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
+                <button 
+                  onClick={() => scrollToSection(item.id)}
                   className="text-white hover:text-red-500 px-4 py-2 text-sm font-medium transition-all duration-300 uppercase tracking-wider relative group"
                 >
-                  {item}
+                  {item.name}
                   <motion.div
                     className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-500 group-hover:w-full transition-all duration-300"
                     whileHover={{ width: "100%" }}
                   />
-                </Link>
+                </button>
               </motion.div>
             ))}
           </motion.div>
@@ -150,9 +165,14 @@ export default function Navbar() {
                 className="px-2 pt-2 pb-3 space-y-1 bg-black/95 backdrop-blur-sm rounded-b-lg"
                 variants={mobileMenuVariants}
               >
-                {['Home', 'About', 'Projects', 'Contact'].map((item) => (
+                {[
+                  { name: 'Home', id: 'hero' },
+                  { name: 'About', id: 'about' },
+                  { name: 'Projects', id: 'projects' },
+                  { name: 'Contact', id: 'contact' }
+                ].map((item) => (
                   <motion.div
-                    key={item}
+                    key={item.name}
                     variants={itemVariants}
                     whileHover={{ 
                       scale: 1.05,
@@ -165,13 +185,15 @@ export default function Navbar() {
                       transition: { duration: 0.1 }
                     }}
                   >
-                    <Link 
-                      href={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
-                      className="block text-white hover:text-red-500 px-4 py-2 text-sm font-medium transition-all duration-300 uppercase tracking-wider rounded-md"
-                      onClick={() => setIsOpen(false)}
+                    <button 
+                      onClick={() => {
+                        scrollToSection(item.id);
+                        setIsOpen(false);
+                      }}
+                      className="block text-white hover:text-red-500 px-4 py-2 text-sm font-medium transition-all duration-300 uppercase tracking-wider rounded-md w-full text-left"
                     >
-                      {item}
-                    </Link>
+                      {item.name}
+                    </button>
                   </motion.div>
                 ))}
               </motion.div>

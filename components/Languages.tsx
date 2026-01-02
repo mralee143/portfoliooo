@@ -39,10 +39,11 @@ export default function Languages() {
   
   const mousePosition = useMousePosition();
   const [isMobile, setIsMobile] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
-  // Detect mobile devices
+  // Detect mobile devices and client-side rendering
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    setIsClient(true);
     
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
@@ -58,7 +59,7 @@ export default function Languages() {
 
   // Mouse parallax (disabled on mobile for performance)
   const mouseX = useSpring(
-    isMobile || typeof window === 'undefined' 
+    !isClient || isMobile 
       ? 0 
       : (mousePosition.x - window.innerWidth / 2) * 0.01, 
     {
@@ -67,7 +68,7 @@ export default function Languages() {
     }
   );
   const mouseY = useSpring(
-    isMobile || typeof window === 'undefined' 
+    !isClient || isMobile 
       ? 0 
       : (mousePosition.y - window.innerHeight / 2) * 0.01, 
     {
@@ -84,16 +85,16 @@ export default function Languages() {
     >
       {/* Floating particles background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(isMobile ? 20 : 50)].map((_, i) => (
+        {isClient && [...Array(isMobile ? 20 : 50)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 bg-red-500 rounded-full opacity-30"
             initial={{
-              x: typeof window !== 'undefined' ? Math.random() * window.innerWidth : 0,
-              y: typeof window !== 'undefined' ? Math.random() * window.innerHeight : 0,
+              x: Math.random() * window.innerWidth,
+              y: Math.random() * window.innerHeight,
             }}
             animate={{
-              y: [null, -100, typeof window !== 'undefined' ? window.innerHeight + 100 : 1000],
+              y: [null, -100, window.innerHeight + 100],
               opacity: [0, 1, 0],
             }}
             transition={{

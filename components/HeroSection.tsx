@@ -103,7 +103,7 @@ export default function HeroSection() {
   };
 
   return (
-    <section ref={containerRef} className="relative min-h-screen bg-black overflow-hidden" style={{ perspective: '1000px' }}>
+    <section ref={containerRef} className="relative min-h-screen bg-black overflow-hidden" style={{ perspective: '1000px' }} id="hero">
       {/* Animated background elements */}
       <motion.div 
         className="absolute inset-0 opacity-5"

@@ -5,20 +5,49 @@ import { useState, useEffect, useRef } from 'react';
 
 export default function AboutSection() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isClient, setIsClient] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
   
-  // Smooth mouse tracking
+  // Smooth mouse tracking with reduced sensitivity
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const smoothMouseX = useSpring(mouseX, { damping: 50, stiffness: 400 });
-  const smoothMouseY = useSpring(mouseY, { damping: 50, stiffness: 400 });
+  const smoothMouseX = useSpring(mouseX, { damping: 80, stiffness: 200 });
+  const smoothMouseY = useSpring(mouseY, { damping: 80, stiffness: 200 });
 
-  // Parallax transforms
-  const backgroundY = useTransform(scrollY, [0, 1000], [0, 200]);
-  const cardY = useTransform(scrollY, [0, 1000], [0, -100]);
+  // Simplified parallax transforms
+  const backgroundY = useTransform(scrollY, [0, 1000], [0, 100]);
 
-  // Mouse move handler for 3D effects
+  const experiences = [
+    {
+      title: 'Full Stack Developer',
+      company: 'Metosys',
+      period: '2025 - 2026',
+      description: 'Building modern web applications using MERN stack with focus on performance and user experience',
+      icon: '💻'
+    },
+    {
+      title: 'AI Chatbot Specialist',
+      company: 'Various Clients',
+      period: '2025 - Present',
+      description: 'Creating intelligent chatbot solutions for businesses to automate customer support',
+      icon: '🤖'
+    },
+    {
+      title: 'Web Developer',
+      company: 'Personal Projects',
+      period: '2025 - 2026',
+      description: 'Learning and building various web applications to master modern technologies',
+      icon: '🚀'
+    }
+  ];
+
+  // Client-side rendering check
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  // Optimized mouse move handler
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (containerRef.current) {
@@ -29,9 +58,9 @@ export default function AboutSection() {
         const x = (e.clientX - centerX) / rect.width;
         const y = (e.clientY - centerY) / rect.height;
         
-        mouseX.set(x * 15);
-        mouseY.set(y * 15);
-        setMousePosition({ x: x * 10, y: y * 10 });
+        mouseX.set(x * 10);
+        mouseY.set(y * 10);
+        setMousePosition({ x: x * 8, y: y * 8 });
       }
     };
 
@@ -39,35 +68,14 @@ export default function AboutSection() {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [mouseX, mouseY]);
 
-  const skills = [
-    { name: 'Frontend Development', level: 90 },
-    { name: 'Backend Development', level: 85 },
-    { name: 'AI Chatbot Development', level: 88 },
-    { name: 'Database Management', level: 82 }
-  ];
-
-  const experiences = [
-    {
-      title: 'Full Stack Developer',
-      company: 'Freelance',
-      period: '2023 - Present',
-      description: 'Building modern web applications using MERN stack'
-    },
-    {
-      title: 'AI Chatbot Specialist',
-      company: 'Various Projects',
-      period: '2023 - Present',
-      description: 'Developing intelligent chatbot solutions for businesses'
-    }
-  ];
-
   return (
     <section 
       ref={containerRef} 
-      className="relative min-h-screen bg-black overflow-hidden py-20"
-      style={{ perspective: '1000px' }}
+      className="relative min-h-screen bg-black overflow-hidden py-20" 
+      style={{ perspective: '1500px' }}
+      id="about"
     >
-      {/* Animated background elements */}
+      {/* Simplified animated background elements */}
       <motion.div 
         className="absolute inset-0 opacity-5"
         style={{ y: backgroundY }}
@@ -75,45 +83,62 @@ export default function AboutSection() {
         <motion.div
           animate={{ 
             rotate: 360,
-            scale: [1, 1.2, 1]
+            scale: [1, 1.2, 1],
+            opacity: [0.1, 0.3, 0.1]
           }}
           transition={{ 
-            rotate: { duration: 25, repeat: Infinity, ease: "linear" },
-            scale: { duration: 6, repeat: Infinity, ease: "easeInOut" }
+            rotate: { duration: 30, repeat: Infinity, ease: "linear" },
+            scale: { duration: 8, repeat: Infinity, ease: "easeInOut" },
+            opacity: { duration: 6, repeat: Infinity, ease: "easeInOut" }
           }}
-          className="absolute top-1/4 left-1/6 w-40 h-40 border border-red-500/20 rounded-full"
+          className="absolute top-20 left-20 w-40 h-40 border-2 border-red-500/20 rounded-full"
         />
         <motion.div
           animate={{ 
             rotate: -360,
-            scale: [1, 0.8, 1]
+            scale: [1, 0.8, 1],
+            opacity: [0.1, 0.4, 0.1]
           }}
           transition={{ 
-            rotate: { duration: 20, repeat: Infinity, ease: "linear" },
-            scale: { duration: 8, repeat: Infinity, ease: "easeInOut" }
+            rotate: { duration: 25, repeat: Infinity, ease: "linear" },
+            scale: { duration: 10, repeat: Infinity, ease: "easeInOut" },
+            opacity: { duration: 8, repeat: Infinity, ease: "easeInOut" }
           }}
-          className="absolute bottom-1/4 right-1/6 w-32 h-32 border border-red-500/15 rounded-full"
+          className="absolute bottom-20 right-20 w-32 h-32 border-2 border-red-500/15"
+          style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }}
+        />
+        <motion.div
+          animate={{ 
+            rotate: 180,
+            scale: [1, 1.3, 1],
+            opacity: [0.05, 0.2, 0.05]
+          }}
+          transition={{ 
+            duration: 20,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="absolute top-1/2 left-1/4 w-24 h-24 border-2 border-red-500/10"
         />
       </motion.div>
 
-      {/* Background "ABOUT" text */}
+      {/* Simplified background "ABOUT" text */}
       <motion.div 
         className="absolute inset-0 flex items-center justify-center overflow-hidden"
         style={{ 
-          y: backgroundY,
           rotateX: smoothMouseY,
           rotateY: smoothMouseX,
           transformStyle: 'preserve-3d'
         }}
       >
         <motion.h1 
-          initial={{ opacity: 0, scale: 0.8, z: -200 }}
-          animate={{ opacity: 0.05, scale: 1, z: 0 }}
+          initial={{ opacity: 0, scale: 0.5, z: -200 }}
+          animate={{ opacity: 0.03, scale: 1, z: 0 }}
           transition={{ duration: 2, ease: "easeOut" }}
-          className="text-[8rem] md:text-[12rem] lg:text-[16rem] xl:text-[20rem] font-black text-red-600 select-none pointer-events-none leading-none tracking-tighter"
+          className="text-[8rem] sm:text-[12rem] md:text-[16rem] lg:text-[20rem] xl:text-[24rem] font-black text-red-600 select-none pointer-events-none leading-none tracking-tighter"
           style={{ 
-            textShadow: '0 0 50px rgba(239, 68, 68, 0.2)',
-            transform: `translateZ(-100px) rotateX(${mousePosition.y * 0.3}deg) rotateY(${mousePosition.x * 0.3}deg)`
+            textShadow: '0 0 100px rgba(239, 68, 68, 0.2)',
+            transform: `translateZ(-100px) rotateX(${mousePosition.y * 0.2}deg) rotateY(${mousePosition.x * 0.2}deg)`
           }}
         >
           ABOUT
@@ -121,370 +146,300 @@ export default function AboutSection() {
       </motion.div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
+        
+        {/* Simplified Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 50, rotateX: 45 }}
+          initial={{ opacity: 0, y: 50, rotateX: 30 }}
           whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-          transition={{ duration: 1 }}
+          transition={{ duration: 1, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="text-center mb-16 relative z-20"
+          className="text-center mb-20"
           style={{ transformStyle: 'preserve-3d' }}
         >
-          <motion.div 
-            className="bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-full text-sm font-medium inline-flex items-center mb-6 shadow-lg shadow-red-500/25 relative z-30"
-            whileHover={{ 
-              scale: 1.05, 
-              boxShadow: "0 20px 40px rgba(239, 68, 68, 0.4)",
-              y: -5,
-              z: 50
+          <motion.span 
+            className="text-red-500 text-lg font-medium mb-4 block tracking-wider"
+            style={{ transform: 'translateZ(20px)' }}
+            animate={{
+              textShadow: [
+                '0 0 20px rgba(239, 68, 68, 0.5)',
+                '0 0 30px rgba(239, 68, 68, 0.7)',
+                '0 0 20px rgba(239, 68, 68, 0.5)'
+              ]
             }}
-            style={{ transformStyle: 'preserve-3d' }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
           >
-            <motion.div 
-              animate={{ rotate: 360 }}
-              transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-              className="w-3 h-3 bg-white rounded-full mr-3"
-            />
-            About Me
-          </motion.div>
-          
+            GET TO KNOW ME
+          </motion.span>
           <motion.h2 
-            className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 relative z-30"
+            className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6"
             style={{ 
-              textShadow: '0 5px 15px rgba(0, 0, 0, 0.3)',
-              transform: 'translateZ(50px)'
+              transform: 'translateZ(30px)',
+              textShadow: '0 10px 30px rgba(0, 0, 0, 0.5)'
             }}
           >
-            Get to Know Me
+            About <span className="text-red-500">Me</span>
           </motion.h2>
-          
-          <motion.p 
-            className="text-gray-300 text-lg max-w-2xl mx-auto relative z-30"
-            style={{ 
-              textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
-              transform: 'translateZ(40px)'
-            }}
-          >
-            Passionate developer crafting digital experiences with modern technologies
-          </motion.p>
         </motion.div>
 
-        {/* Main Content Grid */}
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start relative z-10">
+        {/* Simplified Main Content */}
+        <div className="grid lg:grid-cols-3 gap-12 items-start">
           
-          {/* Left Side - Profile Image & Personal Info */}
+          {/* Profile Image Column */}
           <motion.div
-            initial={{ opacity: 0, x: -100, rotateY: -30 }}
+            initial={{ opacity: 0, x: -100, rotateY: -20 }}
             whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
-            transition={{ duration: 1.2 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
             viewport={{ once: true }}
-            className="space-y-8"
-            style={{ 
-              y: cardY,
-              transformStyle: 'preserve-3d'
-            }}
+            className="lg:col-span-1"
+            style={{ transformStyle: 'preserve-3d' }}
           >
-            {/* Profile Image Card */}
             <motion.div
               whileHover={{ 
-                scale: 1.02, 
-                rotateX: 5, 
-                rotateY: 5,
-                boxShadow: "0 25px 50px rgba(239, 68, 68, 0.3)",
-                z: 30
+                scale: 1.05, 
+                rotateY: 8,
+                boxShadow: "0 30px 60px rgba(0, 0, 0, 0.4)",
+                z: 40
               }}
-              className="bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-8 shadow-2xl text-center"
+              className="relative"
               style={{ transformStyle: 'preserve-3d' }}
+              animate={{
+                y: [0, -5, 0]
+              }}
+              transition={{
+                y: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+              }}
             >
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8, rotateY: 45 }}
-                whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
-                transition={{ duration: 1, delay: 0.3 }}
-                viewport={{ once: true }}
-                className="relative inline-block mb-6"
-                style={{ transform: 'translateZ(20px)' }}
+              <motion.div 
+                className="relative w-full aspect-square rounded-2xl overflow-hidden shadow-2xl shadow-black/50"
+                style={{ transformStyle: 'preserve-3d' }}
               >
-                <motion.div
-                  animate={{ 
-                    rotate: [0, 360],
-                    scale: [1, 1.05, 1]
-                  }}
-                  transition={{ 
-                    rotate: { duration: 20, repeat: Infinity, ease: "linear" },
-                    scale: { duration: 4, repeat: Infinity, ease: "easeInOut" }
-                  }}
-                  className="absolute inset-0 rounded-full bg-gradient-to-r from-red-500 via-red-600 to-red-500 p-1 -m-1"
-                />
                 <motion.img
                   src="/assets/profile-image.png"
                   alt="Ali Haider - Full Stack Developer"
-                  className="w-48 h-48 rounded-full object-cover border-4 border-gray-800 relative z-10 shadow-2xl"
-                  whileHover={{ 
-                    scale: 1.1,
-                    rotateY: 15,
-                    z: 40
-                  }}
-                  style={{ transformStyle: 'preserve-3d' }}
+                  className="w-full h-full object-cover object-center"
+                  style={{ transform: 'translateZ(20px)' }}
                 />
+                
+                {/* Simplified floating elements */}
                 <motion.div
-                  animate={{ 
-                    scale: [1, 1.2, 1],
+                  animate={{
+                    rotate: 360,
+                    scale: [1, 1.3, 1],
                     opacity: [0.3, 0.6, 0.3]
                   }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute inset-0 rounded-full bg-red-500/20 blur-xl"
+                  transition={{
+                    rotate: { duration: 15, repeat: Infinity, ease: "linear" },
+                    scale: { duration: 4, repeat: Infinity, ease: "easeInOut" },
+                    opacity: { duration: 3, repeat: Infinity, ease: "easeInOut" }
+                  }}
+                  className="absolute -top-4 -right-4 w-8 h-8 bg-red-500/30 rounded-full blur-sm"
+                />
+                <motion.div
+                  animate={{
+                    rotate: -360,
+                    scale: [1, 0.8, 1],
+                    opacity: [0.2, 0.5, 0.2]
+                  }}
+                  transition={{
+                    rotate: { duration: 12, repeat: Infinity, ease: "linear" },
+                    scale: { duration: 5, repeat: Infinity, ease: "easeInOut" },
+                    opacity: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+                  }}
+                  className="absolute -bottom-4 -left-4 w-6 h-6 bg-red-500/40 rounded-full blur-sm"
                 />
               </motion.div>
-              
-              <motion.h3 
-                className="text-2xl font-bold text-white mb-2"
-                style={{ transform: 'translateZ(15px)' }}
-              >
-                Ali Haider
-              </motion.h3>
-              
-              <motion.p 
-                className="text-red-400 font-medium mb-4"
-                style={{ transform: 'translateZ(10px)' }}
-              >
-                Full Stack MERN Developer & AI Specialist
-              </motion.p>
-              
-              <motion.div 
-                className="flex justify-center space-x-4"
-                style={{ transform: 'translateZ(10px)' }}
-              >
-                {['GitHub', 'LinkedIn', 'Email'].map((platform, index) => (
-                  <motion.button
-                    key={platform}
-                    whileHover={{ 
-                      scale: 1.1, 
-                      y: -3,
-                      boxShadow: "0 10px 20px rgba(239, 68, 68, 0.3)"
-                    }}
-                    whileTap={{ scale: 0.95 }}
-                    className="w-10 h-10 bg-gray-700/50 hover:bg-red-600/20 border border-gray-600/50 hover:border-red-500/50 rounded-full flex items-center justify-center text-gray-300 hover:text-red-400 transition-all duration-300"
-                  >
-                    <span className="text-sm font-bold">{platform[0]}</span>
-                  </motion.button>
-                ))}
-              </motion.div>
-            </motion.div>
 
-            {/* Personal Info Card */}
+              {/* Simplified Stats Cards */}
+              <div className="grid grid-cols-2 gap-4 mt-8">
+                {[
+                  { number: '1', label: 'Year Experience', icon: '⚡' },
+                  { number: '15+', label: 'Projects Done', icon: '🚀' },
+                  { number: '10+', label: 'Happy Clients', icon: '😊' },
+                  { number: '24/7', label: 'Support', icon: '🔧' }
+                ].map((stat, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 30, rotateX: 30 }}
+                    whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                    transition={{ duration: 0.8, delay: index * 0.1, ease: "easeOut" }}
+                    whileHover={{ 
+                      scale: 1.05, 
+                      rotateY: 8,
+                      boxShadow: "0 15px 30px rgba(0, 0, 0, 0.3)",
+                      z: 20
+                    }}
+                    className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 backdrop-blur-sm border border-gray-500/30 rounded-xl p-4 text-center relative overflow-hidden"
+                    style={{ transformStyle: 'preserve-3d' }}
+                  >
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 10 + index * 2, repeat: Infinity, ease: "linear" }}
+                      className="text-xl mb-2"
+                      style={{ transform: 'translateZ(10px)' }}
+                    >
+                      {stat.icon}
+                    </motion.div>
+                    <motion.div 
+                      className="text-xl font-black text-white mb-1"
+                      style={{ transform: 'translateZ(8px)' }}
+                    >
+                      {stat.number}
+                    </motion.div>
+                    <motion.div 
+                      className="text-xs text-white"
+                      style={{ transform: 'translateZ(5px)' }}
+                    >
+                      {stat.label}
+                    </motion.div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
+
+          {/* Content Column */}
+          <motion.div
+            initial={{ opacity: 0, x: 100, rotateY: 20 }}
+            whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
+            viewport={{ once: true }}
+            className="lg:col-span-2 space-y-8"
+            style={{ transformStyle: 'preserve-3d' }}
+          >
+            {/* Bio Section */}
             <motion.div
               whileHover={{ 
                 scale: 1.02, 
                 rotateX: 5, 
                 rotateY: 5,
-                boxShadow: "0 25px 50px rgba(239, 68, 68, 0.2)",
+                boxShadow: "0 25px 50px rgba(0, 0, 0, 0.3)",
                 z: 30
               }}
-              className="bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-8 shadow-2xl"
+              className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 backdrop-blur-sm border border-gray-500/30 rounded-2xl p-8 relative overflow-hidden"
               style={{ transformStyle: 'preserve-3d' }}
             >
               <motion.h3 
-                className="text-2xl font-bold text-white mb-4"
+                className="text-3xl font-bold text-white mb-6"
                 style={{ transform: 'translateZ(15px)' }}
               >
-                Who I Am
+                Who Am I?
               </motion.h3>
-              
               <motion.p 
-                className="text-gray-300 leading-relaxed mb-4"
+                className="text-white leading-relaxed mb-6 text-lg"
                 style={{ transform: 'translateZ(10px)' }}
               >
-                I'm a passionate Full Stack MERN Developer and AI Chatbot Automation Specialist 
-                with 1 year of hands-on experience. I specialize in creating modern, scalable web applications 
-                and intelligent AI-driven solutions.
+                I'm <motion.span 
+                  className="text-red-400 font-semibold"
+                  animate={{
+                    textShadow: [
+                      '0 0 10px rgba(239, 68, 68, 0.6)',
+                      '0 0 15px rgba(239, 68, 68, 0.8)',
+                      '0 0 10px rgba(239, 68, 68, 0.6)'
+                    ]
+                  }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  Ali Haider
+                </motion.span>, a passionate Full Stack MERN Developer and AI Chatbot Automation Specialist. 
+                Currently pursuing my <motion.span 
+                  className="text-red-400 font-semibold"
+                  animate={{
+                    textShadow: [
+                      '0 0 10px rgba(239, 68, 68, 0.6)',
+                      '0 0 15px rgba(239, 68, 68, 0.8)',
+                      '0 0 10px rgba(239, 68, 68, 0.6)'
+                    ]
+                  }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+                >
+                  Bachelor's in Computer Science
+                </motion.span>, I combine academic knowledge with 1 year of hands-on experience 
+                to create modern, scalable web applications and intelligent chatbot solutions that enhance user experience and streamline business processes.
               </motion.p>
-              
               <motion.p 
-                className="text-gray-300 leading-relaxed"
+                className="text-white leading-relaxed text-lg"
                 style={{ transform: 'translateZ(10px)' }}
               >
-                My journey in tech is driven by curiosity and a commitment to continuous learning. I believe 
-                in writing clean, efficient code and building solutions that make a real difference.
+                I love turning complex problems into simple, beautiful solutions. When I'm not coding or studying, 
+                you'll find me exploring new technologies, contributing to open-source projects, or 
+                learning about the latest trends in AI and web development. My academic foundation in computer science 
+                helps me approach development challenges with both theoretical understanding and practical expertise.
               </motion.p>
             </motion.div>
-          </motion.div>
 
-          {/* Right Side - Skills & Experience */}
-          <motion.div
-            initial={{ opacity: 0, x: 100, rotateY: 30 }}
-            whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
-            transition={{ duration: 1.2 }}
-            viewport={{ once: true }}
-            className="space-y-8"
-            style={{ 
-              y: cardY,
-              transformStyle: 'preserve-3d'
-            }}
-          >
-            {/* Skills Section */}
+            {/* Experience Timeline */}
             <motion.div
               whileHover={{ 
                 scale: 1.02, 
                 rotateX: -5, 
                 rotateY: -5,
-                boxShadow: "0 25px 50px rgba(239, 68, 68, 0.2)",
+                boxShadow: "0 25px 50px rgba(0, 0, 0, 0.3)",
                 z: 30
               }}
-              className="bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-8 shadow-2xl"
+              className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 backdrop-blur-sm border border-gray-500/30 rounded-2xl p-8 relative overflow-hidden"
               style={{ transformStyle: 'preserve-3d' }}
             >
               <motion.h3 
-                className="text-2xl font-bold text-white mb-6"
-                style={{ transform: 'translateZ(15px)' }}
-              >
-                Core Skills
-              </motion.h3>
-              
-              <div className="space-y-4">
-                {skills.map((skill, index) => (
-                  <motion.div
-                    key={skill.name}
-                    initial={{ opacity: 0, x: -50 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className="space-y-2"
-                    style={{ transform: 'translateZ(10px)' }}
-                  >
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-300 font-medium">{skill.name}</span>
-                      <span className="text-red-400 font-bold">{skill.level}%</span>
-                    </div>
-                    
-                    <div className="w-full bg-gray-700/50 rounded-full h-2 overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${skill.level}%` }}
-                        transition={{ duration: 1.5, delay: index * 0.2, ease: "easeOut" }}
-                        viewport={{ once: true }}
-                        className="h-full bg-gradient-to-r from-red-600 to-red-500 rounded-full relative"
-                      >
-                        <motion.div
-                          animate={{ x: [0, 10, 0] }}
-                          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-full"
-                        />
-                      </motion.div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Experience Card */}
-            <motion.div
-              whileHover={{ 
-                scale: 1.02, 
-                rotateX: 5, 
-                rotateY: -5,
-                boxShadow: "0 25px 50px rgba(239, 68, 68, 0.2)",
-                z: 30
-              }}
-              className="bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-8 shadow-2xl"
-              style={{ transformStyle: 'preserve-3d' }}
-            >
-              <motion.h3 
-                className="text-2xl font-bold text-white mb-6"
+                className="text-3xl font-bold text-white mb-6"
                 style={{ transform: 'translateZ(15px)' }}
               >
                 Experience
               </motion.h3>
-              
-              <div className="space-y-6">
+              <div className="space-y-8">
                 {experiences.map((exp, index) => (
                   <motion.div
                     key={index}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: index * 0.2 }}
-                    viewport={{ once: true }}
-                    className="border-l-2 border-red-500/30 pl-6 relative"
-                    style={{ transform: 'translateZ(10px)' }}
+                    initial={{ opacity: 0, y: 30, rotateX: 20 }}
+                    whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                    transition={{ duration: 0.8, delay: index * 0.2, ease: "easeOut" }}
+                    whileHover={{ 
+                      scale: 1.03, 
+                      rotateY: 3,
+                      z: 15
+                    }}
+                    className="relative pl-16 pb-8 border-l-2 border-gray-500/30 last:border-l-0 last:pb-0"
+                    style={{ transformStyle: 'preserve-3d' }}
                   >
                     <motion.div
                       animate={{ 
-                        scale: [1, 1.2, 1],
-                        boxShadow: [
-                          '0 0 0 0 rgba(239, 68, 68, 0.4)',
-                          '0 0 0 8px rgba(239, 68, 68, 0)',
-                          '0 0 0 0 rgba(239, 68, 68, 0)'
-                        ]
+                        rotate: 360,
+                        scale: [1, 1.1, 1]
                       }}
-                      transition={{ duration: 2, repeat: Infinity, delay: index * 0.5 }}
-                      className="absolute -left-2 top-2 w-4 h-4 bg-red-500 rounded-full"
-                    />
-                    
-                    <h4 className="text-lg font-semibold text-white">{exp.title}</h4>
-                    <p className="text-red-400 font-medium">{exp.company}</p>
-                    <p className="text-gray-400 text-sm mb-2">{exp.period}</p>
-                    <p className="text-gray-300 text-sm">{exp.description}</p>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Stats Card */}
-            <motion.div
-              whileHover={{ 
-                scale: 1.02, 
-                rotateX: -5, 
-                rotateY: 5,
-                boxShadow: "0 25px 50px rgba(239, 68, 68, 0.2)",
-                z: 30
-              }}
-              className="bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-8 shadow-2xl"
-              style={{ transformStyle: 'preserve-3d' }}
-            >
-              <motion.h3 
-                className="text-2xl font-bold text-white mb-6"
-                style={{ transform: 'translateZ(15px)' }}
-              >
-                Quick Stats
-              </motion.h3>
-              
-              <div className="grid grid-cols-2 gap-6">
-                {[
-                  { number: '1+', label: 'Years Experience' },
-                  { number: '15+', label: 'Projects Completed' },
-                  { number: '10+', label: 'Happy Clients' },
-                  { number: '24/7', label: 'Support Available' }
-                ].map((stat, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, scale: 0.5, rotateY: 45 }}
-                    whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
-                    transition={{ duration: 0.8, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    whileHover={{ 
-                      scale: 1.1, 
-                      rotateY: 10,
-                      z: 20
-                    }}
-                    className="text-center"
-                    style={{ 
-                      transform: 'translateZ(10px)',
-                      transformStyle: 'preserve-3d'
-                    }}
-                  >
-                    <motion.div 
-                      className="text-3xl font-black text-red-500 mb-2"
-                      animate={{ 
-                        textShadow: [
-                          '0 0 10px rgba(239, 68, 68, 0.5)',
-                          '0 0 20px rgba(239, 68, 68, 0.8)',
-                          '0 0 10px rgba(239, 68, 68, 0.5)'
-                        ]
+                      transition={{ 
+                        rotate: { duration: 15 + index * 3, repeat: Infinity, ease: "linear" },
+                        scale: { duration: 4, repeat: Infinity, ease: "easeInOut" }
                       }}
-                      transition={{ duration: 2, repeat: Infinity, delay: index * 0.3 }}
+                      className="absolute -left-8 top-0 w-16 h-16 bg-gradient-to-r from-red-600 to-red-700 rounded-full flex items-center justify-center text-2xl shadow-lg shadow-red-500/25"
+                      style={{ transform: 'translateZ(20px)' }}
                     >
-                      {stat.number}
+                      {exp.icon}
                     </motion.div>
-                    <div className="text-gray-300 text-sm font-medium">{stat.label}</div>
+                    <motion.div style={{ transform: 'translateZ(10px)' }}>
+                      <motion.h4 className="text-xl font-bold text-white mb-2">
+                        {exp.title}
+                      </motion.h4>
+                      <motion.p 
+                        className="text-red-400 font-semibold mb-3 text-lg"
+                        animate={{
+                          textShadow: [
+                            '0 0 8px rgba(239, 68, 68, 0.6)',
+                            '0 0 12px rgba(239, 68, 68, 0.8)',
+                            '0 0 8px rgba(239, 68, 68, 0.6)'
+                          ]
+                        }}
+                        transition={{ 
+                          duration: 5, 
+                          repeat: Infinity, 
+                          ease: "easeInOut",
+                          delay: index * 1.5 
+                        }}
+                      >
+                        {exp.company} • {exp.period}
+                      </motion.p>
+                      <motion.p className="text-white leading-relaxed">
+                        {exp.description}
+                      </motion.p>
+                    </motion.div>
                   </motion.div>
                 ))}
               </div>
@@ -494,80 +449,86 @@ export default function AboutSection() {
 
         {/* Call to Action */}
         <motion.div
-          initial={{ opacity: 0, y: 50, rotateX: 45 }}
-          whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
+          initial={{ opacity: 0, y: 50, scale: 0.9 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="text-center mt-16 relative z-20"
+          className="text-center mt-20"
           style={{ transformStyle: 'preserve-3d' }}
         >
-          <motion.button
+          <motion.div
             whileHover={{ 
               scale: 1.05, 
-              boxShadow: "0 25px 50px rgba(239, 68, 68, 0.5)",
-              y: -5,
-              rotateX: -10,
-              z: 30
+              rotateX: -8,
+              boxShadow: "0 30px 60px rgba(239, 68, 68, 0.4)",
+              z: 40
             }}
-            whileTap={{ scale: 0.95, rotateX: 10 }}
-            className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-8 py-4 rounded-full text-lg font-medium transition-all duration-300 flex items-center mx-auto shadow-lg shadow-red-500/25 relative overflow-hidden"
-            style={{ transformStyle: 'preserve-3d' }}
+            whileTap={{ scale: 0.95, rotateX: 8 }}
+            className="inline-block"
+            animate={{
+              y: [0, -5, 0]
+            }}
+            transition={{
+              y: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+            }}
           >
-            <motion.div 
-              animate={{ rotate: 360 }}
-              transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-              className="w-4 h-4 bg-white rounded-full mr-3"
-            />
-            <span style={{ transform: 'translateZ(10px)' }}>Let's Work Together</span>
-            
-            {/* Button glow effect */}
-            <motion.div
-              className="absolute inset-0 rounded-full opacity-0"
-              style={{
-                background: 'linear-gradient(45deg, rgba(255,255,255,0.1), transparent, rgba(255,255,255,0.1))'
-              }}
-              animate={{
-                opacity: [0, 0.3, 0],
-                x: [-100, 100]
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            />
-          </motion.button>
+            <motion.button 
+              className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-12 py-4 rounded-full text-lg font-bold transition-all duration-300 shadow-lg shadow-red-500/25 relative overflow-hidden"
+              style={{ transformStyle: 'preserve-3d' }}
+            >
+              <motion.div 
+                animate={{ rotate: 360 }}
+                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                className="absolute left-6 top-1/2 transform -translate-y-1/2 w-4 h-4 bg-white rounded-full"
+              />
+              <span style={{ transform: 'translateZ(15px)' }}>Let's Work Together</span>
+              
+              {/* Simplified button shine effect */}
+              <motion.div
+                className="absolute inset-0 rounded-full opacity-0"
+                style={{
+                  background: 'linear-gradient(45deg, rgba(255,255,255,0.2), transparent, rgba(255,255,255,0.2))'
+                }}
+                animate={{
+                  opacity: [0, 0.4, 0],
+                  x: [-100, 100]
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+            </motion.button>
+          </motion.div>
         </motion.div>
       </div>
 
-      {/* Floating particles */}
-      <motion.div
-        animate={{
-          y: [0, -20, 0],
-          rotate: [0, 10, 0],
-          opacity: [0.1, 0.3, 0.1]
-        }}
-        transition={{
-          duration: 6,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-        className="absolute top-32 left-16 w-12 h-12 border border-red-500/20 rounded-full"
-      />
-      <motion.div
-        animate={{
-          y: [0, 25, 0],
-          rotate: [0, -15, 0],
-          opacity: [0.1, 0.4, 0.1]
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 2
-        }}
-        className="absolute bottom-32 right-16 w-8 h-8 border border-red-500/15 rounded-full"
-      />
+      {/* Simplified floating particles */}
+      {isClient && [...Array(6)].map((_, i) => (
+        <motion.div
+          key={i}
+          animate={{
+            y: [0, -40, 0],
+            x: [0, Math.sin(i) * 20, 0],
+            rotate: [0, 360],
+            opacity: [0.1, 0.4, 0.1]
+          }}
+          transition={{
+            duration: 8 + i,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: i * 1.2
+          }}
+          className="absolute bg-red-500/20 rounded-full blur-sm"
+          style={{
+            width: `${3 + (i % 3)}px`,
+            height: `${3 + (i % 3)}px`,
+            left: `${10 + i * 15}%`,
+            top: `${15 + (i % 2) * 30}%`
+          }}
+        />
+      ))}
     </section>
   );
 }
