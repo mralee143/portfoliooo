@@ -8,6 +8,20 @@ export default function HeroSection() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
+
+  // Smooth scroll function
+  const scrollToSection = (sectionId: string) => {
+    console.log('Scrolling to section:', sectionId); // Debug log
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    } else {
+      console.log('Element not found:', sectionId); // Debug log
+    }
+  };
   
   // Smooth mouse tracking
   const mouseX = useMotionValue(0);
@@ -170,7 +184,7 @@ export default function HeroSection() {
               className="absolute bottom-20 left-0 space-y-6 max-w-sm"
               style={{ transformStyle: 'preserve-3d' }}
             >
-              <motion.div 
+              <motion.button 
                 variants={floatingVariants}
                 animate="animate"
                 whileHover={{ 
@@ -182,6 +196,7 @@ export default function HeroSection() {
                   z: 20
                 }}
                 whileTap={{ scale: 0.95, rotateX: -5 }}
+                onClick={() => scrollToSection('contact')}
                 className="bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-full text-sm font-medium flex items-center w-fit shadow-lg shadow-red-500/25 cursor-pointer transition-all duration-300"
                 style={{ transformStyle: 'preserve-3d' }}
               >
@@ -191,7 +206,7 @@ export default function HeroSection() {
                   className="w-3 h-3 bg-white rounded-full mr-3"
                 ></motion.div>
                 Open to work
-              </motion.div>
+              </motion.button>
 
               <motion.div 
                 initial={{ opacity: 0, y: 30, rotateX: 45 }}
@@ -326,7 +341,7 @@ export default function HeroSection() {
               className="absolute bottom-20 right-0 space-y-6 max-w-sm"
               style={{ transformStyle: 'preserve-3d' }}
             >
-              <motion.div 
+              <motion.button 
                 variants={floatingVariants}
                 animate="animate"
                 transition={{ delay: 1 }}
@@ -339,6 +354,7 @@ export default function HeroSection() {
                   z: 20
                 }}
                 whileTap={{ scale: 0.95, rotateX: 5 }}
+                onClick={() => scrollToSection('about')}
                 className="bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-full text-sm font-medium flex items-center w-fit shadow-lg shadow-red-500/25 cursor-pointer transition-all duration-300"
                 style={{ transformStyle: 'preserve-3d' }}
               >
@@ -348,7 +364,7 @@ export default function HeroSection() {
                   className="w-3 h-3 bg-white rounded-full mr-3"
                 ></motion.div>
                 About me
-              </motion.div>
+              </motion.button>
 
               <motion.p 
                 initial={{ opacity: 0, y: 30, rotateX: 45 }}
@@ -376,6 +392,7 @@ export default function HeroSection() {
                   z: 30
                 }}
                 whileTap={{ scale: 0.95, rotateX: 10 }}
+                onClick={() => scrollToSection('projects')}
                 className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 flex items-center w-fit shadow-lg shadow-red-500/25"
                 style={{ transformStyle: 'preserve-3d' }}
               >
@@ -589,6 +606,7 @@ export default function HeroSection() {
               rotateX: 8,
               transition: { duration: 0.1 }
             }}
+            onClick={() => scrollToSection('contact')}
             className="bg-gradient-to-r from-red-600 to-red-700 text-white px-8 py-4 rounded-full w-48 shadow-lg shadow-red-500/25 font-medium relative overflow-hidden"
             style={{ transformStyle: 'preserve-3d' }}
           >
@@ -634,6 +652,7 @@ export default function HeroSection() {
               rotateX: 8,
               transition: { duration: 0.1 }
             }}
+            onClick={() => scrollToSection('projects')}
             className="bg-gradient-to-r from-red-600 to-red-700 text-white px-8 py-4 rounded-full w-48 shadow-lg shadow-red-500/25 font-medium relative overflow-hidden"
             style={{ transformStyle: 'preserve-3d' }}
           >
