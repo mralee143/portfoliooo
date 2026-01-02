@@ -181,7 +181,7 @@ export default function ProjectsSection() {
         <motion.div
           initial={{ opacity: 0, y: 50, rotateX: 30 }}
           whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
+          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
           viewport={{ once: true }}
           className="text-center mb-20"
           style={{ transformStyle: 'preserve-3d' }}
@@ -217,7 +217,7 @@ export default function ProjectsSection() {
           <motion.div
             initial={{ scaleY: 0 }}
             whileInView={{ scaleY: 1 }}
-            transition={{ duration: 2, ease: "easeOut" }}
+            transition={{ duration: 3, ease: [0.16, 1, 0.3, 1] }}
             viewport={{ once: false, amount: 0.3 }}
             className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-white via-gray-200 to-white shadow-lg shadow-white/50"
             style={{ 
@@ -261,9 +261,9 @@ export default function ProjectsSection() {
                   scale: 1
                 }}
                 transition={{ 
-                  duration: 1.2, 
-                  delay: index * 0.2,
-                  ease: "easeOut"
+                  duration: 1.6, 
+                  delay: index * 0.25,
+                  ease: [0.16, 1, 0.3, 1]
                 }}
                 viewport={{ once: false, amount: 0.3 }}
                 className={`relative mb-12 ${
@@ -298,7 +298,8 @@ export default function ProjectsSection() {
                     rotateY: project.side === 'left' ? 8 : -8,
                     rotateX: -5,
                     z: 50,
-                    boxShadow: "0 30px 60px rgba(0, 0, 0, 0.3)"
+                    boxShadow: "0 30px 60px rgba(0, 0, 0, 0.3)",
+                    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
                   }}
                   className="relative h-64 rounded-lg overflow-hidden shadow-2xl shadow-gray-500/20 group"
                   style={{ 

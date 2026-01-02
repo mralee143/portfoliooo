@@ -68,14 +68,10 @@ export default function HeroSection() {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [mouseX, mouseY]);
 
-  // Floating animation variants
+  // Floating animation variants with smoother easing
   const floatingVariants = {
     animate: {
-      y: [0, -10, 0],
-      transition: {
-        duration: 3,
-        repeat: Infinity
-      }
+      y: [0, -10, 0]
     }
   };
 
@@ -92,11 +88,7 @@ export default function HeroSection() {
       scale: 1, 
       rotateX: 0, 
       rotateY: 0,
-      z: 0,
-      transition: {
-        duration: 1.2,
-        delay: 0.5
-      }
+      z: 0
     }
   };
 
@@ -109,10 +101,7 @@ export default function HeroSection() {
     visible: { 
       opacity: 1, 
       y: 0, 
-      rotateX: 0,
-      transition: {
-        duration: 0.8
-      }
+      rotateX: 0
     }
   };
 
@@ -180,13 +169,18 @@ export default function HeroSection() {
             <motion.div 
               initial={{ opacity: 0, x: -100, rotateY: -45 }}
               animate={{ opacity: 1, x: 0, rotateY: 0 }}
-              transition={{ duration: 1.2, delay: 0.2 }}
+              transition={{ duration: 1.6, delay: 0.2, ease: "easeOut" }}
               className="absolute bottom-20 left-0 space-y-6 max-w-sm"
               style={{ transformStyle: 'preserve-3d' }}
             >
               <motion.button 
                 variants={floatingVariants}
                 animate="animate"
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
                 whileHover={{ 
                   scale: 1.05, 
                   boxShadow: "0 20px 40px rgba(239, 68, 68, 0.4)", 
@@ -229,6 +223,10 @@ export default function HeroSection() {
                       variants={textRevealVariants}
                       initial="hidden"
                       animate="visible"
+                      transition={{
+                        duration: 1.2,
+                        ease: "easeOut"
+                      }}
                       className={`text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black leading-none tracking-tight ${texts[currentText].color}`}
                       style={{ 
                         textShadow: '0 5px 15px rgba(0, 0, 0, 0.3)',
@@ -241,7 +239,11 @@ export default function HeroSection() {
                       variants={textRevealVariants}
                       initial="hidden"
                       animate="visible"
-                      transition={{ delay: 0.1 }}
+                      transition={{ 
+                        duration: 1.2,
+                        ease: "easeOut",
+                        delay: 0.1 
+                      }}
                       className={`text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black leading-none tracking-tight ${texts[currentText].color}`}
                       style={{ 
                         textShadow: '0 5px 15px rgba(0, 0, 0, 0.3)',
@@ -261,6 +263,11 @@ export default function HeroSection() {
                 variants={cardVariants}
                 initial="hidden"
                 animate="visible"
+                transition={{
+                  duration: 1.8,
+                  delay: 0.5,
+                  ease: "easeOut"
+                }}
                 style={{ 
                   y: imageY,
                   rotateX: smoothMouseY,
@@ -337,14 +344,19 @@ export default function HeroSection() {
             <motion.div 
               initial={{ opacity: 0, x: 100, rotateY: 45 }}
               animate={{ opacity: 1, x: 0, rotateY: 0 }}
-              transition={{ duration: 1.2, delay: 0.4 }}
+              transition={{ duration: 1.6, delay: 0.4, ease: "easeOut" }}
               className="absolute bottom-20 right-0 space-y-6 max-w-sm"
               style={{ transformStyle: 'preserve-3d' }}
             >
               <motion.button 
                 variants={floatingVariants}
                 animate="animate"
-                transition={{ delay: 1 }}
+                transition={{ 
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 1 
+                }}
                 whileHover={{ 
                   scale: 1.05, 
                   boxShadow: "0 20px 40px rgba(239, 68, 68, 0.4)", 
@@ -458,7 +470,7 @@ export default function HeroSection() {
         <motion.div 
           initial={{ opacity: 0, scale: 0.6, rotateY: 45, z: -50 }}
           animate={{ opacity: 1, scale: 1, rotateY: 0, z: 0 }}
-          transition={{ duration: 1.2, delay: 0.5 }}
+          transition={{ duration: 1.6, delay: 0.5, ease: "easeOut" }}
           whileHover={{ 
             scale: 1.08, 
             rotateY: 8, 
@@ -540,7 +552,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 40, rotateX: 60, scale: 0.8, z: -30 }}
             animate={{ opacity: 1, y: 0, rotateX: 0, scale: 1, z: 0 }}
             exit={{ opacity: 0, y: -40, rotateX: -60, scale: 0.8, z: -30 }}
-            transition={{ duration: 0.9, ease: "easeOut" }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
             style={{ transformStyle: 'preserve-3d' }}
             className="relative z-10"
           >

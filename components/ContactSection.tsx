@@ -184,7 +184,7 @@ export default function ContactSection() {
         <motion.div
           initial={{ opacity: 0, y: 30, rotateX: 15 }}
           whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
+          transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }}
           viewport={{ once: false, amount: 0.3 }}
           className="text-center mb-20"
           style={{ transformStyle: 'preserve-3d' }}
@@ -227,7 +227,7 @@ export default function ContactSection() {
           <motion.div
             initial={{ opacity: 0, x: -50, rotateY: -15 }}
             whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
+            transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }}
             viewport={{ once: false, amount: 0.3 }}
             className="space-y-8"
             style={{ transformStyle: 'preserve-3d' }}
@@ -248,9 +248,9 @@ export default function ContactSection() {
                   initial={{ opacity: 0, x: -30, rotateY: -20, scale: 0.9 }}
                   whileInView={{ opacity: 1, x: 0, rotateY: 0, scale: 1 }}
                   transition={{ 
-                    duration: 1.2, 
-                    delay: index * 0.15,
-                    ease: [0.25, 0.46, 0.45, 0.94]
+                    duration: 1.6, 
+                    delay: index * 0.2,
+                    ease: [0.16, 1, 0.3, 1]
                   }}
                   viewport={{ once: false, amount: 0.5 }}
                   whileHover={{ 
@@ -331,7 +331,7 @@ export default function ContactSection() {
           <motion.div
             initial={{ opacity: 0, x: 50, rotateY: 15 }}
             whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
+            transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }}
             viewport={{ once: false, amount: 0.3 }}
             whileHover={{
               backgroundColor: 'rgba(239, 68, 68, 0.08)',

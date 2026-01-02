@@ -151,7 +151,7 @@ export default function AboutSection() {
         <motion.div
           initial={{ opacity: 0, y: 50, rotateX: 30 }}
           whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
+          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
           viewport={{ once: true }}
           className="text-center mb-20"
           style={{ transformStyle: 'preserve-3d' }}
@@ -188,7 +188,7 @@ export default function AboutSection() {
           <motion.div
             initial={{ opacity: 0, x: -100, rotateY: -20 }}
             whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
+            transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
             viewport={{ once: true }}
             className="lg:col-span-1"
             style={{ transformStyle: 'preserve-3d' }}
@@ -198,7 +198,8 @@ export default function AboutSection() {
                 scale: 1.05, 
                 rotateY: 8,
                 boxShadow: "0 30px 60px rgba(0, 0, 0, 0.4)",
-                z: 40
+                z: 40,
+                transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
               }}
               className="relative"
               style={{ transformStyle: 'preserve-3d' }}
@@ -301,7 +302,7 @@ export default function AboutSection() {
           <motion.div
             initial={{ opacity: 0, x: 100, rotateY: 20 }}
             whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
+            transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
             viewport={{ once: true }}
             className="lg:col-span-2 space-y-8"
             style={{ transformStyle: 'preserve-3d' }}

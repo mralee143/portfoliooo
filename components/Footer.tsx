@@ -88,7 +88,7 @@ export default function Footer() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             viewport={{ once: true, amount: 0.3 }}
             className="lg:col-span-1"
           >
@@ -117,7 +117,7 @@ export default function Footer() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+            transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             viewport={{ once: true, amount: 0.3 }}
           >
             <h4 className="text-lg font-semibold text-white mb-6">Quick Links</h4>
@@ -132,10 +132,10 @@ export default function Footer() {
                   whileHover={{ 
                     x: 5,
                     color: '#ef4444',
-                    transition: { duration: 0.2 }
+                    transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] }
                   }}
                   onClick={() => scrollToSection(link.id)}
-                  className="block text-gray-300 hover:text-red-500 transition-all duration-300 cursor-pointer text-left"
+                  className="block text-gray-300 hover:text-red-500 transition-all duration-500 cursor-pointer text-left"
                 >
                   {link.name}
                 </motion.button>
@@ -147,7 +147,7 @@ export default function Footer() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+            transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             viewport={{ once: true, amount: 0.3 }}
           >
             <h4 className="text-lg font-semibold text-white mb-6">Technologies</h4>
@@ -163,9 +163,9 @@ export default function Footer() {
                     scale: 1.05,
                     backgroundColor: '#dc2626',
                     color: '#ffffff',
-                    transition: { duration: 0.2 }
+                    transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] }
                   }}
-                  className="px-3 py-1 bg-red-500/10 text-red-400 text-xs rounded-full border border-red-500/20 hover:border-red-500 transition-all duration-300 cursor-default"
+                  className="px-3 py-1 bg-red-500/10 text-red-400 text-xs rounded-full border border-red-500/20 hover:border-red-500 transition-all duration-500 cursor-default"
                 >
                   {tech}
                 </motion.span>
@@ -177,7 +177,7 @@ export default function Footer() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+            transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             viewport={{ once: true, amount: 0.3 }}
           >
             <h4 className="text-lg font-semibold text-white mb-6">Connect With Me</h4>
@@ -195,11 +195,11 @@ export default function Footer() {
                   whileHover={{ 
                     scale: 1.02,
                     x: -3,
-                    transition: { duration: 0.2 }
+                    transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] }
                   }}
-                  className="flex items-center bg-gray-800/50 hover:bg-red-500/20 p-3 rounded-lg text-gray-300 hover:text-white border border-gray-700/50 hover:border-red-500/50 transition-all duration-300 group"
+                  className="flex items-center bg-gray-800/50 hover:bg-red-500/20 p-3 rounded-lg text-gray-300 hover:text-white border border-gray-700/50 hover:border-red-500/50 transition-all duration-500 group"
                 >
-                  <span className="mr-3 text-red-400 group-hover:text-red-300 transition-colors duration-300">
+                  <span className="mr-3 text-red-400 group-hover:text-red-300 transition-colors duration-500">
                     {social.icon}
                   </span>
                   <span>{social.name}</span>
@@ -213,7 +213,7 @@ export default function Footer() {
         <motion.div
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
-          transition={{ duration: 1, ease: "easeOut" }}
+          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
           viewport={{ once: true }}
           className="h-px bg-gradient-to-r from-transparent via-red-500/50 to-transparent mb-8"
         />
@@ -222,7 +222,7 @@ export default function Footer() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           viewport={{ once: true }}
           className="flex flex-col md:flex-row justify-between items-center text-gray-400 text-sm"
         >

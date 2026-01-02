@@ -12,9 +12,9 @@ export default function Navbar() {
       y: 0, 
       opacity: 1,
       transition: {
-        duration: 0.8,
-        ease: [0.25, 0.46, 0.45, 0.94] as const,
-        staggerChildren: 0.1
+        duration: 1.2,
+        ease: [0.16, 1, 0.3, 1] as const,
+        staggerChildren: 0.15
       }
     }
   };
@@ -36,8 +36,8 @@ export default function Navbar() {
       y: 0, 
       opacity: 1,
       transition: {
-        duration: 0.6,
-        ease: [0.25, 0.46, 0.45, 0.94] as const
+        duration: 0.8,
+        ease: [0.16, 1, 0.3, 1] as const
       }
     }
   };
@@ -45,19 +45,11 @@ export default function Navbar() {
   const mobileMenuVariants = {
     hidden: { 
       opacity: 0, 
-      height: 0,
-      transition: {
-        duration: 0.3
-      }
+      height: 0
     },
     visible: { 
       opacity: 1, 
-      height: "auto",
-      transition: {
-        duration: 0.4,
-        staggerChildren: 0.1,
-        delayChildren: 0.1
-      }
+      height: "auto"
     }
   };
 
@@ -90,22 +82,22 @@ export default function Navbar() {
                   rotateY: 5,
                   rotateX: 2,
                   z: 20,
-                  transition: { duration: 0.3 }
+                  transition: { duration: 0.4, ease: "easeOut" }
                 }}
                 whileTap={{ 
                   scale: 0.95,
                   rotateY: -2,
-                  transition: { duration: 0.1 }
+                  transition: { duration: 0.15, ease: "easeOut" }
                 }}
                 style={{ transformStyle: 'preserve-3d' }}
               >
                 <button 
                   onClick={() => scrollToSection(item.id)}
-                  className="text-white hover:text-red-500 px-4 py-2 text-sm font-medium transition-all duration-300 uppercase tracking-wider relative group"
+                  className="text-white hover:text-red-500 px-4 py-2 text-sm font-medium transition-all duration-500 uppercase tracking-wider relative group"
                 >
                   {item.name}
                   <motion.div
-                    className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-500 group-hover:w-full transition-all duration-300"
+                    className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-500 group-hover:w-full transition-all duration-500"
                     whileHover={{ width: "100%" }}
                   />
                 </button>
@@ -160,6 +152,12 @@ export default function Navbar() {
               animate="visible"
               exit="hidden"
               variants={mobileMenuVariants}
+              transition={{
+                duration: 0.6,
+                ease: "easeInOut",
+                staggerChildren: 0.15,
+                delayChildren: 0.1
+              }}
             >
               <motion.div 
                 className="px-2 pt-2 pb-3 space-y-1 bg-black/95 backdrop-blur-sm rounded-b-lg"

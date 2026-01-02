@@ -112,10 +112,10 @@ export default function Languages() {
         initial={{ opacity: 0, y: -100, rotateX: -90, scale: 0.5 }}
         whileInView={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
         transition={{ 
-          duration: 1.5, 
-          ease: [0.25, 0.46, 0.45, 0.94],
+          duration: 2, 
+          ease: [0.16, 1, 0.3, 1],
           type: "spring",
-          stiffness: 80,
+          stiffness: 60,
           damping: 20
         }}
         viewport={{ once: true, margin: "-100px" }}
@@ -135,7 +135,7 @@ export default function Languages() {
             rotateZ: isMobile ? 0 : 2,
             textShadow: "0 0 30px rgba(239, 68, 68, 0.8)",
             filter: "brightness(1.2)",
-            transition: { duration: 0.4, type: "spring", stiffness: 200 }
+            transition: { duration: 0.6, type: "spring", stiffness: 150, ease: [0.16, 1, 0.3, 1] }
           }}
           animate={{
             textShadow: [
@@ -163,10 +163,10 @@ export default function Languages() {
           initial={{ opacity: 0, scale: 0.5, rotateY: -180 }}
           whileInView={{ opacity: 0.5, scale: 1, rotateY: 0 }}
           transition={{ 
-            duration: 2,
-            ease: [0.25, 0.46, 0.45, 0.94],
+            duration: 2.5,
+            ease: [0.16, 1, 0.3, 1],
             type: "spring",
-            stiffness: 50
+            stiffness: 40
           }}
           viewport={{ once: true }}
           style={{ 
@@ -196,11 +196,11 @@ export default function Languages() {
                   scale: 1
                 }}
                 transition={{ 
-                  duration: 0.8, 
-                  delay: index * 0.15,
-                  ease: [0.25, 0.46, 0.45, 0.94],
+                  duration: 1.2, 
+                  delay: index * 0.2,
+                  ease: [0.16, 1, 0.3, 1],
                   type: "spring",
-                  stiffness: 100
+                  stiffness: 80
                 }}
                 whileHover={{
                   scale: 1.1,
@@ -208,7 +208,7 @@ export default function Languages() {
                   rotateX: 5,
                   z: 50,
                   boxShadow: "0 25px 50px rgba(0, 0, 0, 0.5)",
-                  transition: { duration: 0.3 }
+                  transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] }
                 }}
                 whileTap={{
                   scale: 0.95,
