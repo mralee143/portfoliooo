@@ -26,11 +26,21 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-black">
       <Navbar />
-      <HeroSection />
-      <Languages />
-      <AboutSection />
-      <ProjectsSection />
-      <ContactSection />
+      <section id="hero">
+        <HeroSection />
+      </section>
+      <section id="languages">
+        <Languages />
+      </section>
+      <section id="about">
+        <AboutSection />
+      </section>
+      <section id="projects">
+        <ProjectsSection />
+      </section>
+      <section id="contact">
+        <ContactSection />
+      </section>
       <Footer />
       
       {/* <Projects /> */}

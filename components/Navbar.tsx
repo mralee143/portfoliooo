@@ -1,10 +1,30 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const navRef = useRef<HTMLDivElement>(null);
+
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: Event) => {
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('touchstart', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [isOpen]);
 
   const navVariants = {
     hidden: { y: -100, opacity: 0 },
@@ -19,15 +39,26 @@ export default function Navbar() {
     }
   };
 
-  // Smooth scroll function
+  // Enhanced smooth scroll function with mobile optimization
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      });
-    }
+    // Close mobile menu immediately
+    setIsOpen(false);
+    
+    // Use requestAnimationFrame for better performance
+    requestAnimationFrame(() => {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        const navbarHeight = 80;
+        const elementTop = element.offsetTop;
+        const scrollToPosition = Math.max(0, elementTop - navbarHeight);
+
+        // Smooth scroll with better mobile support
+        window.scrollTo({
+          top: scrollToPosition,
+          behavior: 'smooth'
+        });
+      }
+    });
   };
 
   const itemVariants = {
@@ -55,6 +86,7 @@ export default function Navbar() {
 
   return (
     <motion.nav 
+      ref={navRef}
       initial="hidden"
       animate="visible"
       variants={navVariants}
@@ -70,6 +102,7 @@ export default function Navbar() {
           >
             {[
               { name: 'Home', id: 'hero' },
+              { name: 'Languages', id: 'languages' },
               { name: 'About', id: 'about' },
               { name: 'Projects', id: 'projects' },
               { name: 'Contact', id: 'contact' }
@@ -92,7 +125,11 @@ export default function Navbar() {
                 style={{ transformStyle: 'preserve-3d' }}
               >
                 <button 
-                  onClick={() => scrollToSection(item.id)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    scrollToSection(item.id);
+                  }}
                   className="text-white hover:text-red-500 px-4 py-2 text-sm font-medium transition-all duration-500 uppercase tracking-wider relative group"
                 >
                   {item.name}
@@ -108,9 +145,14 @@ export default function Navbar() {
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center ml-auto">
             <motion.button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-white hover:text-red-500 focus:outline-none focus:text-red-500 transition-colors"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setIsOpen(!isOpen);
+              }}
+              className="text-white hover:text-red-500 focus:outline-none focus:text-red-500 transition-colors p-2"
               aria-label="Toggle menu"
+              type="button"
               whileHover={{ 
                 scale: 1.1,
                 rotate: 5,
@@ -147,7 +189,7 @@ export default function Navbar() {
         <AnimatePresence>
           {isOpen && (
             <motion.div 
-              className="md:hidden overflow-hidden"
+              className="md:hidden overflow-hidden absolute top-full left-0 right-0 z-50"
               initial="hidden"
               animate="visible"
               exit="hidden"
@@ -160,11 +202,12 @@ export default function Navbar() {
               }}
             >
               <motion.div 
-                className="px-2 pt-2 pb-3 space-y-1 bg-black/95 backdrop-blur-sm rounded-b-lg"
+                className="px-2 pt-2 pb-3 space-y-1 bg-black/95 backdrop-blur-sm rounded-b-lg shadow-lg border-t border-gray-800"
                 variants={mobileMenuVariants}
               >
                 {[
                   { name: 'Home', id: 'hero' },
+                  { name: 'Languages', id: 'languages' },
                   { name: 'About', id: 'about' },
                   { name: 'Projects', id: 'projects' },
                   { name: 'Contact', id: 'contact' }
@@ -184,9 +227,10 @@ export default function Navbar() {
                     }}
                   >
                     <button 
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
                         scrollToSection(item.id);
-                        setIsOpen(false);
                       }}
                       className="block text-white hover:text-red-500 px-4 py-2 text-sm font-medium transition-all duration-300 uppercase tracking-wider rounded-md w-full text-left"
                     >

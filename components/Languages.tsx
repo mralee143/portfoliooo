@@ -80,7 +80,7 @@ export default function Languages() {
   return (
     <section 
       ref={containerRef}
-      className="relative py-20 px-6 bg-black min-h-screen flex flex-col justify-center overflow-hidden"
+      className="relative py-16 md:py-20 px-4 md:px-6 bg-black min-h-screen flex flex-col justify-center overflow-hidden"
       style={{ perspective: '2000px' }}
     >
       {/* Floating particles background */}
@@ -154,12 +154,12 @@ export default function Languages() {
         </motion.div>
       </motion.div>
 
-      {/* Background Large Text */}
-      <div className="relative flex-1 flex items-center justify-center">
+      {/* Background Large Text and Skills Grid */}
+      <div className="relative flex-1 flex flex-col items-center justify-center min-h-[80vh]">
         <motion.h1 
           className="font-black text-[30vw] md:text-[25vw] lg:text-[20vw] xl:text-[16vw] 
                       text-transparent bg-gradient-to-b from-gray-300 via-gray-500 to-gray-800 
-                      bg-clip-text select-none pointer-events-none opacity-50 leading-none font-sans"
+                      bg-clip-text select-none pointer-events-none opacity-50 leading-none font-sans mb-8"
           initial={{ opacity: 0, scale: 0.5, rotateY: -180 }}
           whileInView={{ opacity: 0.5, scale: 1, rotateY: 0 }}
           transition={{ 
@@ -177,9 +177,9 @@ export default function Languages() {
           LANGUAGES
         </motion.h1>
         
-        {/* Skills Grid Overlay */}
-        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-8 w-full max-w-6xl">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 px-4">
+        {/* Skills Grid */}
+        <div className="w-full max-w-6xl px-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6 lg:gap-8">
             {skills.map((skill, index) => (
               <motion.div
                 key={skill.number}
@@ -204,29 +204,29 @@ export default function Languages() {
                 }}
                 whileHover={{
                   scale: 1.1,
-                  rotateY: 10,
-                  rotateX: 5,
-                  z: 50,
-                  boxShadow: "0 25px 50px rgba(0, 0, 0, 0.5)",
+                  rotateY: isMobile ? 0 : 10,
+                  rotateX: isMobile ? 0 : 5,
+                  z: isMobile ? 0 : 50,
+                  boxShadow: isMobile ? "none" : "0 25px 50px rgba(0, 0, 0, 0.5)",
                   transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] }
                 }}
                 whileTap={{
                   scale: 0.95,
-                  rotateY: -5,
+                  rotateY: isMobile ? 0 : -5,
                   transition: { duration: 0.1 }
                 }}
                 viewport={{ once: true }}
-                className="text-center group cursor-pointer"
+                className="text-center group cursor-pointer p-2"
                 style={{ 
                   perspective: '1000px',
                   transformStyle: 'preserve-3d'
                 }}
               >
                 <motion.div 
-                  className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2 group-hover:text-red-500 transition-colors duration-300 font-sans"
+                  className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-2 group-hover:text-red-500 transition-colors duration-300 font-sans"
                   whileHover={{
                     scale: 1.2,
-                    rotateZ: 5,
+                    rotateZ: isMobile ? 0 : 5,
                     textShadow: "0 0 30px rgba(255, 255, 255, 0.8)"
                   }}
                   transition={{ duration: 0.3 }}
@@ -240,7 +240,7 @@ export default function Languages() {
                   transition={{ duration: 0.6, delay: index * 0.15 + 0.3 }}
                   whileHover={{
                     scale: 1.05,
-                    letterSpacing: '0.2em'
+                    letterSpacing: isMobile ? '0.1em' : '0.2em'
                   }}
                 >
                   {skill.title}
